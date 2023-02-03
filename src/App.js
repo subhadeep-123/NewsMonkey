@@ -1,20 +1,36 @@
 import React, { Component } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
 import NavBar from "./components/NavBar";
+import News from "./components/News";
+import About from "./components/About";
 
 export default class App extends Component {
   render() {
     const router = createBrowserRouter([
       {
         path: "/",
-        element: <div>Hello world!</div>,
+        element: (
+          <div>
+            {<NavBar />}
+            <Outlet />
+          </div>
+        ),
+        children: [
+          {
+            path: "/",
+            element: <News />,
+          },
+          {
+            path: "/about",
+            element: <About />,
+          },
+        ],
       },
     ]);
 
     return (
       <div>
-        <NavBar />
         <RouterProvider router={router} />
       </div>
     );
