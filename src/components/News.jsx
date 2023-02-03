@@ -46,7 +46,7 @@ export default class News extends Component {
   render() {
     return (
       <div className="container my-3">
-        <h2>NewsMonkey - Top Headlines</h2>
+        <h2 className="text-center">NewsMonkey - Top Headlines</h2>
         <div className="row mx-3">
           {this.state.articles.map((element) => {
             return (
