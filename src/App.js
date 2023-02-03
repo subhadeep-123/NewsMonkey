@@ -5,8 +5,11 @@ import NavBar from "./components/NavBar";
 import News from "./components/News";
 import About from "./components/About";
 
+const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
+
 export default class App extends Component {
   render() {
+    console.log(API_KEY);
     const router = createBrowserRouter([
       {
         path: "/",
@@ -19,7 +22,7 @@ export default class App extends Component {
         children: [
           {
             path: "/",
-            element: <News />,
+            element: <News key={API_KEY} />,
           },
           {
             path: "/about",
