@@ -14,53 +14,33 @@ export default class News extends Component {
     };
   }
 
-  async componentDidMount() {
-    await axios
+  makeRequest(pageNo, setResults) {
+    console.log(`Page - ${pageNo}`);
+    axios
       .get(
-        `https://newsapi.org/v2/top-headlines?country=us&apiKey=${this.state.key}&page=${this.state.page}&pageSize=18`
+        `https://newsapi.org/v2/top-headlines?country=us&apiKey=${this.state.key}&page=${pageNo}&pageSize=18`
       )
       .then((res) => {
-        if (res.status !== 200) console.error("Something is wrong with API");
-        this.setState({
-          articles: res.data.articles,
-          total: res.data.totalResults,
-        });
+        this.setState({ articles: res.data.articles });
+        if (setResults) this.setState({ total: res.data.totalResults });
+      })
+      .catch((err) => {
+        console.error("Something is wrong with API");
       });
   }
 
+  componentDidMount() {
+    this.makeRequest(this.state.page, true);
+  }
+
   handlePreviousClick = () => {
-    axios
-      .get(
-        `https://newsapi.org/v2/top-headlines?country=us&apiKey=${
-          this.state.key
-        }&page=${this.state.page - 1}&pageSize=18`
-      )
-      .then((res) => {
-        if (res.status !== 200) console.error("Something is wrong with API");
-        this.setState({
-          articles: res.data.articles,
-          page: this.state.page - 1,
-        });
-      });
+    this.makeRequest(this.state.page - 1, false);
+    this.setState({ page: this.state.page - 1 });
   };
 
   handleNextClick = () => {
-    if (!(this.state.page + 1 > Math.ceil(this.state.total / 18))) {
-      axios
-        .get(
-          `https://newsapi.org/v2/top-headlines?country=us&apiKey=${
-            this.state.key
-          }&page=${this.state.page + 1}&pageSize=18`
-        )
-        .then((res) => {
-          if (res.status !== 200) console.error("Something is wrong with API");
-          console.log(res);
-          this.setState({
-            articles: res.data.articles,
-            page: this.state.page + 1,
-          });
-        });
-    }
+    this.makeRequest(this.state.page + 1, false);
+    this.setState({ page: this.state.page + 1 });
   };
 
   render() {
@@ -109,6 +89,7 @@ export default class News extends Component {
           <button
             type="button"
             className="btn btn-dark"
+            disabled={this.state.page + 1 > Math.ceil(this.state.total / 18)}
             onClick={this.handleNextClick}
           >
             Next &rarr;
