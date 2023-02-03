@@ -16,7 +16,6 @@ export default class News extends Component {
         `https://newsapi.org/v2/top-headlines?country=us&apiKey=${this.state.key}`
       )
       .then((res) => {
-        console.log(res);
         if (res.status !== 200) console.error("Something is wrong with API");
         this.setState(res.data);
       });
@@ -31,17 +30,25 @@ export default class News extends Component {
               <div className="col-md-4" key={element.url}>
                 <NewsItem
                   title={
-                    element.title.length >= 45
-                      ? element.title.slice(0, 88)
-                      : element.title
+                    element.title
+                      ? element.title.length >= 45
+                        ? element.title.slice(0, 88)
+                        : element.title
+                      : ""
                   }
                   description={
-                    element.description.length >= 88
-                      ? element.description.slice(0, 88)
-                      : element.description
+                    element.description
+                      ? element.description.length >= 88
+                        ? element.description.slice(0, 88)
+                        : element.description
+                      : ""
                   }
                   newsUrl={element.url}
-                  imageUrl={element.urlToImage}
+                  imageUrl={
+                    !element.urlToImage
+                      ? "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png"
+                      : element.urlToImage
+                  }
                 />
               </div>
             );

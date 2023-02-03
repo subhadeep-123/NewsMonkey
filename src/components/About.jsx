@@ -3,7 +3,6 @@ import imagepath from "../assets/images/subhadeep.jpg";
 
 export default class About extends Component {
   render() {
-    console.log(Image);
     return (
       <div className="container">
         <h2 style={{ textAlign: "center" }}>My, MySelf & I</h2>
