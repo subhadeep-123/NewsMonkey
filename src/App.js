@@ -1,12 +1,22 @@
-import "./App.css";
-
 import React, { Component } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import NavBar from "./components/NavBar";
 
 export default class App extends Component {
-  firstName = "subhadeep";
   render() {
+    const router = createBrowserRouter([
+      {
+        path: "/",
+        element: <div>Hello world!</div>,
+      },
+    ]);
+
     return (
-      <div>This is my first class based component - {this.firstName}`</div>
+      <div>
+        <NavBar />
+        <RouterProvider router={router} />
+      </div>
     );
   }
 }
