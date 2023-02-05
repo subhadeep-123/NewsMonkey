@@ -2,8 +2,20 @@ import axios from "axios";
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import Loader from "./Loader";
+import PropTypes from "prop-types";
 
 export default class News extends Component {
+  static defaultProps = {
+    country: "in",
+    pageSize: 8,
+    category: "general",
+  };
+  static propTypes = {
+    country: PropTypes.string,
+    pageSize: PropTypes.number,
+    category: PropTypes.string,
+  };
+
   constructor() {
     super();
     this.state = {
