@@ -60,7 +60,10 @@ export default class News extends Component {
     return (
       <div className="container my-3">
         <h2 className="text-center" style={{ margin: "3px 0px" }}>
-          NewsMonkey - Top Headlines
+          NewsMonkey -{" "}
+          {this.props.category.charAt(0).toUpperCase() +
+            this.props.category.slice(1)}{" "}
+          Top Headlines
         </h2>
         {this.state.loading && <Loader />}
         <div className="row mx-3">
