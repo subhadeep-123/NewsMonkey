@@ -28,11 +28,10 @@ export default class News extends Component {
   }
 
   async makeRequest(pageNo, setResults) {
-    console.log(`Page - ${pageNo}`);
     this.setState({ loading: true });
     await axios
       .get(
-        `https://newsapi.org/v2/top-headlines?country=us&apiKey=${this.state.key}&page=${pageNo}&pageSize=${this.pageSize}`
+        `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.key}&page=${pageNo}&pageSize=${this.props.pageSize}`
       )
       .then((res) => {
         this.setState({ articles: res.data.articles, loading: false });
@@ -60,7 +59,9 @@ export default class News extends Component {
   render() {
     return (
       <div className="container my-3">
-        <h2 className="text-center">NewsMonkey - Top Headlines</h2>
+        <h2 className="text-center" style={{ margin: "3px 0px" }}>
+          NewsMonkey - Top Headlines
+        </h2>
         {this.state.loading && <Loader />}
         <div className="row mx-3">
           {!this.state.loading &&
