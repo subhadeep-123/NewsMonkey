@@ -92,6 +92,11 @@ export default class News extends Component {
                         ? "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png"
                         : element.urlToImage
                     }
+                    author={!element.author ? "Unknown" : element.author}
+                    publishTime={new Date(
+                      Date.parse(element.publishedAt)
+                    ).toGMTString()}
+                    source={element.source.name}
                   />
                 </div>
               );
