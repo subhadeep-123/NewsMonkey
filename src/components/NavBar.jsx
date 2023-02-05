@@ -58,7 +58,7 @@ export default class NavBar extends Component {
                 </Link>
               </li>
             </ul>
-            <ul class="d-flex navbar-nav mb-2 mb-lg-0">
+            <ul className="d-flex navbar-nav mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link className="nav-link" to="/about">
                   About
