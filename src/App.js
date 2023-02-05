@@ -19,7 +19,7 @@ export default class App extends Component {
         children: [
           {
             path: "/",
-            element: <News />,
+            element: <News pageSize={15} />,
           },
           {
             path: "/about",
