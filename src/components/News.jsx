@@ -16,8 +16,8 @@ export default class News extends Component {
     category: PropTypes.string,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       articles: [],
       key: process.env.REACT_APP_NEWS_API_KEY,
@@ -25,7 +25,13 @@ export default class News extends Component {
       page: 1,
       total: 0,
     };
+    document.title =
+      this.capitalizeString(this.props.category) + " - NewsMonkey";
   }
+
+  capitalizeString = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
 
   async makeRequest(pageNo, setResults) {
     this.setState({ loading: true });
@@ -60,10 +66,8 @@ export default class News extends Component {
     return (
       <div className="container my-3">
         <h2 className="text-center" style={{ margin: "3px 0px" }}>
-          NewsMonkey -{" "}
-          {this.props.category.charAt(0).toUpperCase() +
-            this.props.category.slice(1)}{" "}
-          Top Headlines
+          NewsMonkey - {this.capitalizeString(this.props.category)} Top
+          Headlines
         </h2>
         {this.state.loading && <Loader />}
         <div className="row mx-3">
