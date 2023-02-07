@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import Loader from "./Loader";
 import PropTypes from "prop-types";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default class News extends Component {
   static defaultProps = {
@@ -17,6 +18,7 @@ export default class News extends Component {
   };
 
   constructor(props) {
+    console.log("Constructed");
     super(props);
     this.state = {
       articles: [],
@@ -33,14 +35,19 @@ export default class News extends Component {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
-  async makeRequest(pageNo, setResults) {
+  async makeRequest(pageNo, setResults, concatenate = false) {
     this.setState({ loading: true });
     await axios
       .get(
         `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.key}&page=${pageNo}&pageSize=${this.props.pageSize}`
       )
       .then((res) => {
-        this.setState({ articles: res.data.articles, loading: false });
+        this.setState({
+          articles: concatenate
+            ? this.state.articles.concat(res.data.articles)
+            : res.data.articles,
+          loading: false,
+        });
         if (setResults) this.setState({ total: res.data.totalResults });
       })
       .catch((err) => {
@@ -50,15 +57,11 @@ export default class News extends Component {
 
   componentDidMount() {
     this.makeRequest(this.state.page, true);
+    console.log(this.state.articles);
   }
 
-  handlePreviousClick = () => {
-    this.makeRequest(this.state.page - 1, false);
-    this.setState({ page: this.state.page - 1 });
-  };
-
-  handleNextClick = () => {
-    this.makeRequest(this.state.page + 1, false);
+  fetchMore = () => {
+    this.makeRequest(this.state.page + 1, false, true);
     this.setState({ page: this.state.page + 1 });
   };
 
@@ -70,9 +73,14 @@ export default class News extends Component {
           Headlines
         </h2>
         {this.state.loading && <Loader />}
-        <div className="row mx-3">
-          {!this.state.loading &&
-            this.state.articles.map((element) => {
+        <InfiniteScroll
+          dataLength={this.state.articles.length}
+          next={this.fetchMore}
+          hasMore={this.state.articles.length !== this.state.total}
+          loader={<Loader />}
+        >
+          <div className="row mx-3">
+            {this.state.articles.map((element) => {
               return (
                 <div className="col-md-4" key={element.url}>
                   <NewsItem
@@ -105,25 +113,8 @@ export default class News extends Component {
                 </div>
               );
             })}
-        </div>
-        <div className="container d-flex justify-content-between">
-          <button
-            type="button"
-            className="btn btn-dark"
-            disabled={this.state.page <= 1}
-            onClick={this.handlePreviousClick}
-          >
-            &larr; Previous
-          </button>
-          <button
-            type="button"
-            className="btn btn-dark"
-            disabled={this.state.page + 1 > Math.ceil(this.state.total / 18)}
-            onClick={this.handleNextClick}
-          >
-            Next &rarr;
-          </button>
-        </div>
+          </div>
+        </InfiniteScroll>
       </div>
     );
   }
