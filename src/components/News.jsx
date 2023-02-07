@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { Component } from "react";
-import NewsItem from "./NewsItem";
-import Loader from "./Loader";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
+
+import NewsItem from "./NewsItem";
+import Loader from "./Loader";
 
 export default class News extends Component {
   static defaultProps = {
@@ -15,6 +16,7 @@ export default class News extends Component {
     country: PropTypes.string,
     pageSize: PropTypes.number,
     category: PropTypes.string,
+    setProgress: PropTypes.func
   };
 
   constructor(props) {
@@ -35,6 +37,7 @@ export default class News extends Component {
   };
 
   async makeRequest(pageNo, setResults, concatenate = false) {
+    this.props.setProgress(10);
     this.setState({ loading: true });
     await axios
       .get(
@@ -47,6 +50,7 @@ export default class News extends Component {
             : res.data.articles,
           loading: false,
         });
+        this.props.setProgress(100);
         if (setResults) this.setState({ total: res.data.totalResults });
       })
       .catch((err) => {
@@ -59,8 +63,10 @@ export default class News extends Component {
   }
 
   fetchMore = () => {
+    this.props.setProgress(10);
     this.makeRequest(this.state.page + 1, false, true);
     this.setState({ page: this.state.page + 1 });
+    this.props.setProgress(100);
   };
 
   render() {
