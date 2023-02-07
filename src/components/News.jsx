@@ -18,7 +18,6 @@ export default class News extends Component {
   };
 
   constructor(props) {
-    console.log("Constructed");
     super(props);
     this.state = {
       articles: [],
@@ -57,7 +56,6 @@ export default class News extends Component {
 
   componentDidMount() {
     this.makeRequest(this.state.page, true);
-    console.log(this.state.articles);
   }
 
   fetchMore = () => {
