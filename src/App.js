@@ -24,7 +24,11 @@ export default class App extends Component {
         path: "/",
         element: (
           <div>
-            <LoadingBar color="#f11946" progress={this.state.progress} />
+            <LoadingBar
+              color="#f11946"
+              height={2}
+              progress={this.state.progress}
+            />
             {<NavBar />}
             <Outlet />
           </div>

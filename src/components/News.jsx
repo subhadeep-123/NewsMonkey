@@ -63,8 +63,9 @@ export default class News extends Component {
   }
 
   fetchMore = () => {
-    this.props.setProgress(10);
+    this.props.setProgress(0);
     this.makeRequest(this.state.page + 1, false, true);
+    this.props.setProgress(20);
     this.setState({ page: this.state.page + 1 });
     this.props.setProgress(100);
   };
