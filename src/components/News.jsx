@@ -54,7 +54,10 @@ export const News = (props) => {
 
   return (
     <div className="container my-3">
-      <h2 className="text-center" style={{ margin: "3px 0px" }}>
+      <h2
+        className="text-center"
+        style={{ margin: "3px 0px", marginTop: "95px" }}
+      >
         NewsMonkey - {capitalizeString(props.category)} Top Headlines
       </h2>
       {loading && <Loader />}
