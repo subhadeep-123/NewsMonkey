@@ -1,7 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const NavBar = () => {
+const iso = require("iso-3166-1");
+
+export const NavBar = (props) => {
+  const changeCountryName = () => {
+    props.setCountryName(
+      iso
+        .whereCountry(document.getElementById("country_name").value)
+        .alpha2.toLowerCase()
+    );
+  };
+
   return (
     <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
       <div className="container-fluid">
@@ -56,14 +66,26 @@ export const NavBar = () => {
                 Technology
               </Link>
             </li>
-          </ul>
-          <ul className="d-flex navbar-nav mb-2 mb-lg-0">
             <li className="nav-item">
               <Link className="nav-link" to="/about">
-                About
+                AboutMe!
               </Link>
             </li>
           </ul>
+          <div className="d-flex">
+            <input
+              className="form-control me-2"
+              id="country_name"
+              placeholder="Enter country name"
+              aria-label="Search"
+            />
+            <button
+              className="btn btn-outline-success"
+              onClick={changeCountryName}
+            >
+              Search
+            </button>
+          </div>
         </div>
       </div>
     </nav>
