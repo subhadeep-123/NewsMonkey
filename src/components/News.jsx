@@ -3,8 +3,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import NewsItem from "./NewsItem";
-import Loader from "./Loader";
+import { NewsItem } from "./NewsItem";
+import { Loader } from "./Loader";
 
 export default class News extends Component {
   static defaultProps = {
@@ -16,7 +16,7 @@ export default class News extends Component {
     country: PropTypes.string,
     pageSize: PropTypes.number,
     category: PropTypes.string,
-    setProgress: PropTypes.func
+    setProgress: PropTypes.func,
   };
 
   constructor(props) {
