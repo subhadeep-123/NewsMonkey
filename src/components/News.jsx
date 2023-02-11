@@ -6,6 +6,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { NewsItem } from "./NewsItem";
 import { Loader } from "./Loader";
 
+const iso = require("iso-3166-1");
+
 export const News = (props) => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -58,7 +60,8 @@ export const News = (props) => {
         className="text-center"
         style={{ margin: "3px 0px", marginTop: "95px" }}
       >
-        NewsMonkey - {capitalizeString(props.category)} Top Headlines
+        NewsMonkey - {capitalizeString(props.category)} Top Headlines (
+        {iso.whereAlpha2(props.country).country})
       </h2>
       {loading && <Loader />}
       <InfiniteScroll
