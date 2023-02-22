@@ -42,18 +42,20 @@ export const News = (props) => {
   };
 
   const fetchMore = async () => {
-    props.setProgress(0);
-    await makeRequest(page + 1, false, true);
-    props.setProgress(20);
-    setPage(page + 1);
-    props.setProgress(100);
+    if (articles.length !== 0) {
+      props.setProgress(0);
+      await makeRequest(page + 1, false, true);
+      props.setProgress(20);
+      setPage(page + 1);
+      props.setProgress(100);
+    }
   };
 
   useEffect(() => {
     document.title = capitalizeString(props.category) + " - NewsMonkey";
-    makeRequest(page, true);
+    makeRequest(1, true);
     // eslint-disable-next-line
-  }, []);
+  }, [props.country]);
 
   return (
     <div className="container my-3">
