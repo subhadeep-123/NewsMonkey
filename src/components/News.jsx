@@ -13,6 +13,7 @@ export const News = (props) => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+  const { articles, setArticles } = props.articleState;
 
   const key = process.env.REACT_APP_NEWS_API_KEY;
 

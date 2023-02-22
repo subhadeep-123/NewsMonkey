@@ -9,6 +9,7 @@ import About from "./components/About";
 export const App = () => {
   const [progress, setProgress] = useState(0);
   const [countryName, setCountryName] = useState("us");
+  const [articles, setArticles] = useState([]);
 
   const router = createBrowserRouter([
     {
@@ -16,7 +17,7 @@ export const App = () => {
       element: (
         <div>
           <LoadingBar color="#f11946" height={2} progress={progress} />
-          {<NavBar setCountryName={setCountryName} />}
+          {<NavBar setCountryName={setCountryName} setArticles={setArticles} />}
           <Outlet />
         </div>
       ),
@@ -28,6 +29,7 @@ export const App = () => {
               setProgress={setProgress}
               pageSize={6}
               country={countryName}
+              articleState={{ articles, setArticles }}
             />
           ),
         },
@@ -40,6 +42,7 @@ export const App = () => {
               key="business"
               country={countryName}
               category="business"
+              articleState={{ articles, setArticles }}
             />
           ),
         },
@@ -52,6 +55,7 @@ export const App = () => {
               key="entertainment"
               country={countryName}
               category="entertainment"
+              articleState={{ articles, setArticles }}
             />
           ),
         },
@@ -64,6 +68,7 @@ export const App = () => {
               key="health"
               country={countryName}
               category="health"
+              articleState={{ articles, setArticles }}
             />
           ),
         },
@@ -76,6 +81,7 @@ export const App = () => {
               key="science"
               country={countryName}
               category="science"
+              articleState={{ articles, setArticles }}
             />
           ),
         },
@@ -88,6 +94,7 @@ export const App = () => {
               key="sports"
               country={countryName}
               category="sports"
+              articleState={{ articles, setArticles }}
             />
           ),
         },
@@ -100,6 +107,7 @@ export const App = () => {
               key="technology"
               country={countryName}
               category="technology"
+              articleState={{ articles, setArticles }}
             />
           ),
         },

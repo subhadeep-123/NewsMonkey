@@ -10,6 +10,7 @@ export const NavBar = (props) => {
         .whereCountry(document.getElementById("country_name").value)
         .alpha2.toLowerCase()
     );
+    props.setArticles([]);
   };
 
   return (
