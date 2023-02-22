@@ -9,7 +9,6 @@ import { Loader } from "./Loader";
 const iso = require("iso-3166-1");
 
 export const News = (props) => {
-  const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
@@ -71,7 +70,6 @@ export const News = (props) => {
         dataLength={articles.length}
         next={fetchMore}
         hasMore={articles.length !== total}
-        loader={<Loader />}
       >
         <div className="row mx-3">
           {articles.map((element) => {
